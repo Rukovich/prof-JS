@@ -1,0 +1,25 @@
+.container {
+  max-width: 1160px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 50px;
+}
+
+.goods-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 15vw;
+  background-color: pink;
+  border: 2px solid rebeccapurple;
+}
+.cart-button {
+  background-color: pink;
+  border: 2px solid rebeccapurple;
+  margin: 10px 0px;
+  padding: 5px;
+}
+.cart-button:active {
+  opacity: 0.4;
+  transition: 0.1s; }
