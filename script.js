@@ -5,9 +5,7 @@ const goods = [
   { title: 'Shoes', price: 250 },
 ];
 
-
-
-const renderGoodsItem = (title = [], price = []) => {
+const renderGoodsItem = ({ title, price }) => {
   return `
     <div class="goods-item">
       <h3>${title}</h3>
@@ -15,11 +13,9 @@ const renderGoodsItem = (title = [], price = []) => {
     </div>
   `;
 };
-//деструктурируем объект
-const [{ title, price }] = goods;
 
-const renderGoodsList = (list = []) => {
-  let goodsList = list.map(item => renderGoodsItem(title, price));
+const renderGoodsList = (list) => {
+  let goodsList = list.map(item => renderGoodsItem(item)).join('');
   document.querySelector('.goods-list').innerHTML = goodsList;
 };
 
