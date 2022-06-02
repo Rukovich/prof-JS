@@ -1,3 +1,4 @@
+
 const goods = [
   { title: 'Shirt', price: 150 },
   { title: 'Socks', price: 50 },
@@ -9,15 +10,18 @@ const BASE_URL = "https://raw.githubusercontent.com/GeekBrainsTutorial/online-st
 const GOODS = `${BASE_URL}/catalogData.json`;
 const GET_BASKET_GOODS_ITEMS = `${BASE_URL}/getBasket.json`
 
-function service(url, callback) {
+function service(url) {
+
+return new Promise((resolve, reject) => {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url);
-const loadHandler = () => {
-  callback(JSON.parse(xhr.response));
-};
-xhr.onload = loadHandler;
-
-xhr.send();
+  xhr.send();
+  xhr.onload = () => {
+    if (xhr.readyState === 4) {
+      resolve(JSON.parse(xhr.response))
+    }
+  }
+})
 }
 
 class GoodsItem {
@@ -37,18 +41,24 @@ render() {
 
 class GoodsList {
   items = [];
-  fetchGoods(callback) {
-    service(GOODS, (data) => {
+  filteredItems = []
+  fetchGoods() {
+    return service(GOODS).then((data) => {
       this.items = data;
-      callback()
+      this.filteredItems = data;
+      return data;
     });
-    this.items = goods;
+  }
+  filter(str) {
+    this.filteredItems = this.items.filter(({ product_name }) => {
+      return (new RegExp(str, 'i')).test(product_name);
+  })
   }
   calculatePrice() {
     return this.items.reduce((prev, { price }) => prev + price, 0);
   }
   render() {
-    const goods = this.items.map(item => {
+    const goods = this.filteredItems.map(item => {
       const goodItem = new GoodsItem(item);
       return goodItem.render();
     }).join('');
@@ -56,7 +66,6 @@ class GoodsList {
     document.querySelector('.goods-list').innerHTML = goods;
   }
 }
-
 
 class BasketGoods {
   items = [];
@@ -75,3 +84,9 @@ const goodsList = new GoodsList();
 goodsList.fetchGoods(() => {
   goodsList.render();
 });
+
+document.getElementsByClassName('search-button')[0].addEventListener('click', () => {
+  const input = document.getElementsByClassName('goods-search')[0];
+  goodsList.filter(input.value);
+  goodsList.render();
+})

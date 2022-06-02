@@ -19,6 +19,7 @@ header {
   padding: 0 100px;
 }
 
+
 .title {
   color: pink;
   display: flex;
@@ -28,6 +29,7 @@ header {
 .actions {
   display: flex;
   align-items: center;
+  grid-column-start: -2;
 }
 
 button {
@@ -61,4 +63,15 @@ button {
 }
 .cart-button:active {
   opacity: 0.4;
-  transition: 0.1s; }
+  transition: 0.1s; 
+}
+
+.search-button, .goods-search {
+  background-color: pink;
+  border: 2px solid rebeccapurple;
+  margin: 10px 0px;
+  padding: 5px;
+}
+.search {
+  display: flex;
+}
