@@ -5,7 +5,7 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-body {
+#root {
   display: grid;
   grid-template-rows: max-content auto;
   gap: 40px;
@@ -59,7 +59,7 @@ button {
 .goods-list {
   display: flex;
   justify-content: center;
-  gap: 40px
+  gap: 40px;
 }
 .cart-button:active {
   opacity: 0.4;
