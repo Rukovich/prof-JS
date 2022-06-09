@@ -5,7 +5,6 @@
    <meta charset="UTF-8">
    <title>eShop</title>
    <link rel="stylesheet" href="style.css">
-   <script src="https://unpkg.com/vue@next"></script> <!-- vue.js v.3 -->
    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script> <!-- vue.js v.2 -->
    <script src="script.js"></script>
 
@@ -13,27 +12,23 @@
 
 <body>
    <div id="root">
-
       <header>
-         <h1 class="title">eShop {{calculatePrice}}</h1>
-
+         <h1 class="title">eShop</h1>
          <div class="search">
             <input type="text" class="goods-search" v-model="search" />
-            <!-- <button class="search-button" type="button">Искать</button> -->
+            <custom-button v-on:click="filterItems">искать</custom-button>
          </div>
          <div class="actions">
-            <button class="cart-button" type="button">Корзина</button>
+            <custom-button v-on:click="setVisionCard">Корзина</custom-button>
          </div>
       </header>
       <main>
-         <div class="goods-list">
-            <div class="goods-item" v-for="item in filteredItems">
-               <h3>{{ item.product_name }}</h3>
-               <p>{{ item.price }}</p>
-            </div>
+         <div class="goods-list" v-if="filteredItems.length">
+            <goods-item v-for="item in filteredItems" v-bind:item="item"></goods-item>
+            <div v-else>Нет данных</div>
          </div>
-      </main>`
-
+      </main>
+      <basket-goods v-if="cardIsVision" v-on:closeclick="setVisionCard"></basket-goods>
    </div>
 </body>
 
