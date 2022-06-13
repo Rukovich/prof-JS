@@ -4,7 +4,9 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-html, body, #root {
+html,
+body,
+#root {
   width: 100%;
   height: 100%;
 }
@@ -30,7 +32,8 @@ header {
   align-items: center;
 }
 
-.actions, .search {
+.actions,
+.search {
   padding: 10px;
   display: flex;
   align-items: center;
@@ -69,7 +72,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0,0,0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .basket-card {
