@@ -1,7 +1,7 @@
 
 const BASE_URL = 'http://localhost:8000/';
 const GET_GOODS_ITEMS = `${BASE_URL}goods.json`
-const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basket_goods.json`
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basket`
 
 function service(url) {
   return fetch(url)
@@ -49,7 +49,13 @@ function init() {
             </div>
          </div>
       </div>
-    `
+    `,
+    mounted() {
+      service(GET_BASKET_GOODS_ITEMS).then((data) => {
+        debugger
+        this.basketGoodsItems = data
+      })
+    }
   })
   
   const goodsItem = Vue.component('goods-item', {

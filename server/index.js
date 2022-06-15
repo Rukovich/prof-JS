@@ -21,13 +21,6 @@ const readGoods = () => readFile(GOODS, 'utf-8')
 });
 
 app.get('/basket', (req, res) => {
-  // readBasket().then((basketList) => {
-  //   console.log(basketList)
-  // });
-  // readGoods().then((goodstList) => {
-  //   console.log(goodstList)
-  // })
-  
   Promise.all([
     readBasket(),
     readGoods()
@@ -42,7 +35,7 @@ app.get('/basket', (req, res) => {
       }
     })
   }).then((result) => {
-    console.log(result)
+    res.send(JSON.stringify(result))
   })
 });
 
