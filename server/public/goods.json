@@ -10,12 +10,12 @@
     "product_name": "Телефон"
   },
   {
-    "id_product": 1,
+    "id_product": 3,
     "price": 4000,
     "product_name": "Клавиатура"
   },
   {
-    "id_product": 1,
+    "id_product": 4,
     "price": 2000,
     "product_name": "Мышь"
   }
