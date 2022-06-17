@@ -1,6 +1,7 @@
-const BASE_URL = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses/';
-const GET_GOODS_ITEMS = `${BASE_URL}catalogData.json`
-const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
+
+const BASE_URL = 'http://localhost:8000/';
+const GET_GOODS_ITEMS = `${BASE_URL}goods.json`
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basket`
 
 function service(url) {
   return fetch(url)
@@ -13,6 +14,7 @@ service(GET_BASKET_GOODS_ITEMS).then((data) => {
 
 
 function init() {
+
     //Компонент "Поиск"
   const customSearch = Vue.component('custom-search', {
     template: `
@@ -24,7 +26,7 @@ function init() {
     template: `
       <button class="search-button" type="button" v-on:click="$emit('click')">
          <slot></slot>
-      </button>
+      </button> 
     `
   })
       //Компонент "корзина"
@@ -35,22 +37,47 @@ function init() {
       }
     },
     template: `
-      <div class="fixed-area">
-         <div class="basket-card">
-            <div class="basket-card__header">
-               <h1 class="basket-card__header__title">basket card</h1>
-               <div class="basket-card__header__delete-icon"
-                  v-on:click="$emit('closeclick')"
-               ></div>
-            </div>
-            <div class="basket-card__content">
-               content
-            </div>
+    <div class="fixed-area">
+       <div class="basket-card">
+          <div class="basket-card__header">
+             <h1 class="basket-card__header__title">basket card</h1>
+             <div class="basket-card__header__delete-icon"
+                v-on:click="$emit('closeclick')"
+             ></div>
+          </div>
+          <div class="basket-card__content">
+             <basket-item v-for="item in basketGoodsItems" :item="item"></basket-item>
+          </div>
+       </div>
+    </div>
+  `,
+    mounted() {
+      service(GET_BASKET_GOODS_ITEMS).then((data) => {
+        this.basketGoodsItems = data
+      })
+    }
+  })
+      //Компонент "список товаров в корзине"
+      const BasketItem = Vue.component('basket-item', {
+      props: [
+          'items'
+      ],
+      template: `
+      <div class="basket-item">
+        <div class="basket-item_field">
+          <span class="basket-item__title">{{ item.data.product_name }}</span>
+          <span class="basket-item__price">( {{ item.data.price }}р. )</span>
+        </div>
+         <div class="basket-item__count">
+           <span>{{ item.count }}шт.</span>
+           <button>+</button>
+           <button>-</button>
          </div>
+         <div class="basket-item__total">Всего: {{ item.total }}р.</div>
       </div>
     `
-  })
-  
+    })
+  //Компонент "Список товаров"
   const goodsItem = Vue.component('goods-item', {
     props: [
        'item'
@@ -59,6 +86,9 @@ function init() {
       <div class="goods-item">
          <h3>{{ item.product_name }}</h3>
          <p>{{ item.price }}</p>
+         <div>
+         <custom-button>Добавить</custom-button>
+         </div>
       </div>
     `
   })
