@@ -56,9 +56,13 @@ button {
   box-sizing: border-box;
   background-color: rgb(67, 192, 192);
   outline: 2px solid gray;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: min-content auto min-content;
   gap: 10px;
+}
+.goods-item > *{
+  display: flex;
+  justify-content: center;
 }
 
 .goods-search {
